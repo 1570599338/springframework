@@ -192,6 +192,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 	//---------------------------------------------------------------------
 	// Implementation of BeanFactory interface
+	// 实现 BeanFactory的接口
 	//---------------------------------------------------------------------
 
 	@Override
@@ -239,6 +240,16 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
 			@Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
 
+		/**
+		 * 通过name获取beanName。这里不使用name直接作为beanName有两个原因
+		 * 1、name可能会已 "&" 字符开头，表明调用者想获取FactoryBean本身，而非FactoryBean实现类
+		 * 		所创建的bean。在BeanFactory中，FactoryBean的实现类和其他的bean存储方式是一致的，
+		 * 		即《beanName,name》即底层是利用map存储的,beanName中是没有 & 这个字符的。所以我们
+		 * 		需要将name的首字符 "&" 移除，这样才能从缓存里取到FactoryBean实例
+		 *
+		 * 2、还有别名的问题，转换需要
+		 * 		xml中配置<ali>
+		 */
 		final String beanName = transformedBeanName(name);
 		Object bean;
 

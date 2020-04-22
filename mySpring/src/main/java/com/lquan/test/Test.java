@@ -21,11 +21,13 @@ public class Test {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext annotationConfigApplicationContext
                 = new AnnotationConfigApplicationContext(Configration.class);
+
+        // 注意获取factorybean的实例对象需要在对应beanname前面加"&"
         DaoFactoryBean daoFactoryBean = (DaoFactoryBean) annotationConfigApplicationContext.getBean("&daoFactoryBean");
         daoFactoryBean.testBean();
 
 
-    //    TempDaoFactoryBean tempDaoFactoryBean = (TempDaoFactoryBean) annotationConfigApplicationContext.getBean("daoFactoryBean");
-     //   tempDaoFactoryBean.test();
+//        TempDaoFactoryBean tempDaoFactoryBean = (TempDaoFactoryBean) annotationConfigApplicationContext.getBean("daoFactoryBean");
+//        tempDaoFactoryBean.test();
     }
 }
