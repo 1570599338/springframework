@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="daoFactoryBean" class="com.lquan.spring.xml.dao.DaoFactoryBean">
+		<property name="info" value="你好,12,描述信息"/>
+	</bean>
+
+	<bean id="tempDaoFactoryBean" class="com.lquan.spring.xml.dao.TempDaoFactoryBean">
+		<property name="desc" value="描述信息"/>
+		<property name="age" value="年龄"/>
+		<property name="msg1" value="信息压压"/>
+	</bean>
+
+</beans>
