@@ -39,8 +39,6 @@ public class Test {
 //	}
 
 	public static void main(String[] args) {
-
-
 		Person person1 = new Person("TUCJVXCB");
 		Person person2 = new Person("TUCJVXCB");
 

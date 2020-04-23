@@ -22,9 +22,9 @@ public class Test {
                 = new AnnotationConfigApplicationContext();
 
 		annotationConfigApplicationContext.register(Configration.class);
-
+		annotationConfigApplicationContext.scan("com.lquan.scan");
 		annotationConfigApplicationContext.refresh();
-		annotationConfigApplicationContext.register(IndexDao.class);
+	//	annotationConfigApplicationContext.register(IndexDao.class);
 
 		IndexDao indexDao = annotationConfigApplicationContext.getBean(IndexDao.class);
 		indexDao.query();

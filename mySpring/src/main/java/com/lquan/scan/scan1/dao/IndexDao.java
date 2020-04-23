@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
  * @Param
  * @return
  **/
-//@Service
-public class IndexDao {
+@Service
+public class IndexDao implements IIndexDao {
 
+	@Override
 	public void query(){
 		System.out.println("查询queryDao");
 	}
