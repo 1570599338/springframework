@@ -213,16 +213,49 @@ public class AnnotatedBeanDefinitionReader {
 	<T> void doRegisterBean(Class<T> annotatedClass, @Nullable Supplier<T> instanceSupplier, @Nullable String name,
 			@Nullable Class<? extends Annotation>[] qualifiers, BeanDefinitionCustomizer... definitionCustomizers) {
 
+		/**
+		 *
+		 * 根据指定的bean创建一个AnnotatedGenericBeanDefinition
+		 *
+		 * 这个AnnotatedGenericBeanDefinition可以理解为是一个数据结构
+		 *
+		 * AnnotatedGenericBeanDefinition包含了类的其他信息，比如一个元信息 scop，lazy等等
+		 *
+		 */
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(annotatedClass);
+
+		/**
+		 * 判断这个类是否需要跳过解析
+		 */
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}
 
 		abd.setInstanceSupplier(instanceSupplier);
+
+		/**
+		 * 得到类的作用域
+		 */
 		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
+
+		/**
+		 * 把类的作用域添加到数据结构中
+		 */
 		abd.setScope(scopeMetadata.getScopeName());
+
+		/**
+		 *	生成类的名字通过beanNameGenerator
+		 */
 		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
 
+		/**
+		 *
+		 * 处理类当中的通过注解
+		 * 分析源码可以直到他主要的处理
+		 * lazy、DepenOn Primary Role等等注解
+		 * 处理完成之后processCommonDefinitionAnnotations中依然是把他们添加到数据结构中
+		 *
+		 */
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
