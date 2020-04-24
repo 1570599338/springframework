@@ -32,3 +32,11 @@ Spring中的bean--->BeanDefinition
     BeanPostProcessor接口扩展PriorityOrdered这个接口可以实现队形实现类在ioc容器中的执行顺序。
 
 2、BeanFactoryPostProcessor: Spring允许在Bean创建之前，读取Bean的元属性，并根据自己的需求对元属性进行改变，比如将Bean的scope从singleton改变为prototype。
+
+
+3、BeanDefinitionRegistryPostProcessor
+
+
+
+
+ 

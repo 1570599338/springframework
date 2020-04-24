@@ -260,13 +260,20 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	 * {@link Configuration} classes.
 	 */
 	public void processConfigBeanDefinitions(BeanDefinitionRegistry registry) {
+		// spring的bean
 		List<BeanDefinitionHolder> configCandidates = new ArrayList<>();
+
+		// 获取容器中定义的所有bean的名字
 		String[] candidateNames = registry.getBeanDefinitionNames();
 
 		for (String beanName : candidateNames) {
 			BeanDefinition beanDef = registry.getBeanDefinition(beanName);
 			if (ConfigurationClassUtils.isFullConfigurationClass(beanDef) ||
 					ConfigurationClassUtils.isLiteConfigurationClass(beanDef)) {
+				/**
+				 * 在 beanDefinintion中的configyrationClass属性为full或者lite，则以为着已经处理了，直接跳过
+				 * 这里需要结合下面的代码理解
+				 */
 				if (logger.isDebugEnabled()) {
 					logger.debug("Bean definition has already been processed as a configuration class: " + beanDef);
 				}
@@ -306,11 +313,15 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		}
 
 		// Parse each @Configuration class
+		// 实例化ConfigurationClassParser 为了解析各个配置类
 		ConfigurationClassParser parser = new ConfigurationClassParser(
 				this.metadataReaderFactory, this.problemReporter, this.environment,
 				this.resourceLoader, this.componentScanBeanNameGenerator, registry);
 
+		// 实例化2个set，candidates用于将之前加入的configCandidates进行去重
+		// 因为可能有多个配置类重复了
 		Set<BeanDefinitionHolder> candidates = new LinkedHashSet<>(configCandidates);
+		// alreadyParsed 用于判断是否处理过
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
 		do {
 			parser.parse(candidates);

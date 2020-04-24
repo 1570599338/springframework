@@ -157,7 +157,15 @@ public class AnnotationConfigUtils {
 
 		Set<BeanDefinitionHolder> beanDefs = new LinkedHashSet<>(8);
 
+		//beanDefinition的注册，这里很重要，需要理解注册每一个bean的类型
 		if (!registry.containsBeanDefinition(CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME)) {
+			/**
+			 *
+			 *	需要注意的是ConfigurationClassPostProcessor的类型是BeanDefinitionRegistryPostProcessor
+			 *	而 BeanDefinitionRegistryPostProcessor最终实现的BeanDefinitionPostProcessor这个接口
+			 *	RootBeanDefinition 可以理解Spring内部提供的类
+			 *
+			 **/
 			RootBeanDefinition def = new RootBeanDefinition(ConfigurationClassPostProcessor.class);
 			def.setSource(source);
 			beanDefs.add(registerPostProcessor(registry, def, CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME));

@@ -75,11 +75,26 @@ final class PostProcessorRegistrationDelegate {
 			// uninitialized to let the bean factory post-processors apply to them!
 			// Separate between BeanDefinitionRegistryPostProcessors that implement
 			// PriorityOrdered, Ordered, and the rest.
+			// currentRegistryProcessors 放的是spring内部自己实现了 BeanDefinitionRegistryPostProcessor 接口
 			List<BeanDefinitionRegistryPostProcessor> currentRegistryProcessors = new ArrayList<>();
 
 			// First, invoke the BeanDefinitionRegistryPostProcessors that implement PriorityOrdered.
+			// beanFactor应当在的一个方法
+			//顾名思义能通过类型得到一个bean 的名字 这里的type指的是bd当中描述当前 类的class类型
 			String[] postProcessorNames =
 					beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
+
+
+			/**
+			 * 这个地方可以得到beandefinitionPostProcessor，因为是spring默认在最开始注册的
+			 * 为什么要在最开始注册这个呢？
+			 * 因为spring的工程需要解析去扫描等功能
+			 * 而浙西额功能都是需要在spring工程初始化完成之前执行
+			 * 要么在工程最开始的时候，要么在工程初始化之中，反正不能在之后
+			 * 因为如果在之后就没有意义，因为那个时候已经需要使用工厂了
+			 * 所以这里spring在一开始就注册了一个beanFactoryPostProcessor，用来插手springFactory的市里化过程
+			 * 在这个地方断电可以知道这个类叫做ConfigurationClassPostProcessor
+			 */
 			for (String ppName : postProcessorNames) {
 				if (beanFactory.isTypeMatch(ppName, PriorityOrdered.class)) {
 					currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
@@ -87,8 +102,12 @@ final class PostProcessorRegistrationDelegate {
 				}
 			}
 			sortPostProcessors(currentRegistryProcessors, beanFactory);
+			// 合并list
 			registryProcessors.addAll(currentRegistryProcessors);
+
 			invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
+
+			// 这个list只是一个临时变量，故而要清除
 			currentRegistryProcessors.clear();
 
 			// Next, invoke the BeanDefinitionRegistryPostProcessors that implement Ordered.
