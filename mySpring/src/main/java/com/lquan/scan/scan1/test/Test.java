@@ -18,8 +18,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Test {
 
     public static void main(String[] args) {
+    	// 把spring所有的前提环境准备好
         AnnotationConfigApplicationContext annotationConfigApplicationContext
-                = new AnnotationConfigApplicationContext();
+                = new AnnotationConfigApplicationContext(Configration.class);
 
 		annotationConfigApplicationContext.register(Configration.class);
 		annotationConfigApplicationContext.scan("com.lquan.scan");

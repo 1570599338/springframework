@@ -15,3 +15,20 @@ javaconfig      AnnotationConfigApplicationContext      类的扫描    类的�
 
 
 ###  模拟扫描spring的包扫描功能 com.lquan.scan.scan2
+
+
+## spring的源码
+
+1、spring中的bean的信息描述类
+java中描述java类的信息--> class---->Class
+Spring中的bean--->BeanDefinition
+
+
+
+
+#### 2、spring的bean扩展有哪些？
+答：一共5种
+1、BeanPostProcessor：在每个bena初始化成前后做操作。
+    BeanPostProcessor接口扩展PriorityOrdered这个接口可以实现队形实现类在ioc容器中的执行顺序。
+
+2、BeanFactoryPostProcessor: Spring允许在Bean创建之前，读取Bean的元属性，并根据自己的需求对元属性进行改变，比如将Bean的scope从singleton改变为prototype。

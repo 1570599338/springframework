@@ -27,6 +27,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
+ *
+ *
  * Standalone application context, accepting annotated classes as input - in particular
  * {@link Configuration @Configuration}-annotated classes, but also plain
  * {@link org.springframework.stereotype.Component @Component} types and JSR-330 compliant
@@ -52,8 +54,18 @@ import org.springframework.util.Assert;
  */
 public class AnnotationConfigApplicationContext extends GenericApplicationContext implements AnnotationConfigRegistry {
 
+	/**
+	 * 这个类顾名思义是一个reader，一个读取器
+	 * 读取什么呢？还是顾名思义AnnotatedBeanDefinition意思就是读取一个被加了注解的bean
+	 * 这个类在构造方法中实例化的
+	 */
 	private final AnnotatedBeanDefinitionReader reader;
 
+	/**
+	 * 同上一样顾名思义，这个是一个扫描器，扫描所有加载了注解的bean
+	 * 同样是在构造方法中被实例化的
+	 *
+	 */
 	private final ClassPathBeanDefinitionScanner scanner;
 
 
@@ -62,7 +74,16 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
+		/**
+		 * 父类的构造方法
+		 * 创建一个读取注解的Bean定义读取器
+		 * 什么是Bean定义？BeanDefinition
+		 *
+		 * 作用：有了reader就可以认为是可以获取加了注解的类
+		 *
+		 */
 		this.reader = new AnnotatedBeanDefinitionReader(this);
+
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
@@ -90,7 +111,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 *
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
-
+		// annotatedClasses 代表的配置类
 		// 这里由于他的父类，顾二会先调用父类的构造方法，然后才会调用自己的构造方法
 		// 在自己构造方法中初始化一个读取器和扫描器
 
@@ -155,6 +176,16 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	//---------------------------------------------------------------------
 
 	/**
+	 * 注册单个bean给容器
+	 *
+	 * 比如说有新加的类可以用这个方法
+	 *
+	 * 但是注册之后需要手动调用refresh方法去触发容器去解析注解
+	 *
+	 * 有两个意思
+	 * 	1、可以注册一个配置类
+	 * 	2、可以单独注册一个bean
+	 *
 	 * Register one or more annotated classes to be processed.
 	 * <p>Note that {@link #refresh()} must be called in order for the context
 	 * to fully process the new classes.

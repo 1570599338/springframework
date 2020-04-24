@@ -22,6 +22,9 @@ import org.springframework.core.AttributeAccessor;
 import org.springframework.lang.Nullable;
 
 /**
+ *
+ * spring当中用来描述bean的一个接口
+ *
  * A BeanDefinition describes a bean instance, which has property values,
  * constructor argument values, and further information supplied by
  * concrete implementations.
@@ -40,6 +43,8 @@ import org.springframework.lang.Nullable;
 public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 
 	/**
+	 * 标准单例作用域的作用域标识符："singleton"
+	 *
 	 * Scope identifier for the standard singleton scope: "singleton".
 	 * <p>Note that extended bean factories might support further scopes.
 	 * @see #setScope
@@ -61,6 +66,9 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	int ROLE_APPLICATION = 0;
 
 	/**
+	 *
+	 * ROLE_SUPPORT = 1实际上就是说，我这个bean是用户的，是从配置文件中过来的
+	 *
 	 * Role hint indicating that a {@code BeanDefinition} is a supporting
 	 * part of some larger configuration, typically an outer
 	 * {@link org.springframework.beans.factory.parsing.ComponentDefinition}.
@@ -68,10 +76,14 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * of when looking more closely at a particular
 	 * {@link org.springframework.beans.factory.parsing.ComponentDefinition},
 	 * but not when looking at the overall configuration of an application.
+	 *
+	 *
 	 */
 	int ROLE_SUPPORT = 1;
 
 	/**
+	 * 就是我这个bean是spring自己的，和你用户没有一毛钱关系
+	 *
 	 * Role hint indicating that a {@code BeanDefinition} is providing an
 	 * entirely background role and has no relevance to the end-user. This hint is
 	 * used when registering beans that are completely part of the internal workings
@@ -88,6 +100,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	void setParentName(@Nullable String parentName);
 
 	/**
+	 * 获取bean的父类的名字
 	 * Return the name of the parent definition of this bean definition, if any.
 	 */
 	@Nullable

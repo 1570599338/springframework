@@ -19,6 +19,11 @@ package org.springframework.beans.factory.config;
 import org.springframework.beans.BeansException;
 
 /**
+ * Spring的扩展点之一：
+ *
+ * BeanFactoryPostProcessor Spring允许在Bean创建之前，读取Bean的元属性，
+ * 		并根据自己的需求对元属性进行改变，比如将Bean的scope从singleton改变为prototype。
+ *
  * Allows for custom modification of an application context's bean definitions,
  * adapting the bean property values of the context's underlying bean factory.
  *

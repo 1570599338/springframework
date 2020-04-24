@@ -44,15 +44,21 @@ import org.springframework.util.Assert;
  * @author Phillip Webb
  * @since 3.0
  * @see AnnotationConfigApplicationContext#register
+ *
+ * 注解bean定义读取器
  */
 public class AnnotatedBeanDefinitionReader {
 
+	/** bean的定义注册中心 **/
 	private final BeanDefinitionRegistry registry;
 
+	/** 主要是BeanDefinition生成bean名称 **/
 	private BeanNameGenerator beanNameGenerator = new AnnotationBeanNameGenerator();
 
+	/*****/
 	private ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
 
+	/*****/
 	private ConditionEvaluator conditionEvaluator;
 
 
@@ -257,6 +263,14 @@ public class AnnotatedBeanDefinitionReader {
 		 *
 		 */
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
+
+		/**
+		 * 如果在容器注册注解bean定义时，使用了额外的限定符注解则解析
+		 * 关于qualifier和Primary，
+		 * 主要涉及到sspring自动装配这里需要注意
+		 * byName和qualifiers这个变量是Annotaion类型的数组，里面存的不及你进是qualifiers注解
+		 * 理论上里面存的是一切注解，所以可以看到下面的代码spring曲循环了这个数组然后依然判断了注解当中是否包含了Primary，是否包含lazyd
+		 */
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
 				if (Primary.class == qualifier) {
@@ -266,6 +280,8 @@ public class AnnotatedBeanDefinitionReader {
 					abd.setLazyInit(true);
 				}
 				else {
+					//如果使用了除@Primary和@Lazy以外的其他注解，则为该bean添加一个根据名字自动装配的限定符
+					//
 					abd.addQualifier(new AutowireCandidateQualifier(qualifier));
 				}
 			}
@@ -274,8 +290,24 @@ public class AnnotatedBeanDefinitionReader {
 			customizer.customize(abd);
 		}
 
+		/**
+		 * 这个BeanDefinitionHolder也是一个数据结构
+		 */
 		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
+
+		/**
+		 * ScoperProxyMode 这个需要结合web理解
+		 */
 		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+
+		/**
+		 * 把上述的这个数据结构注册给了registry
+		 * registry就是AnnotaitionConfigApplicationContext
+		 * AnnotaitionConfigApplicationContext在初始化的时候通过调用父类的构造方法
+		 * 实例化了一个DefaultListableBeanFactory
+		 * registerBeanDefinition里面就是把definitionHolder这个数据结构包含的信息注册到DefaultListableBeanFactory
+		 *
+		 */
 		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 	}
 
