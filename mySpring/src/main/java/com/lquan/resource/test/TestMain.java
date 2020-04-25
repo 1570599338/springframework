@@ -19,9 +19,48 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext annotationConfigApplicationContext =
-				new AnnotationConfigApplicationContext(IndexDao.class);
+				new AnnotationConfigApplicationContext();
+		annotationConfigApplicationContext.register(Configration.class);
+		annotationConfigApplicationContext.refresh();
+
+		// 完成了扫描但是完成这个扫描工作的不是AnnotationConfigApplicationContext里面scanner
+		System.out.println(annotationConfigApplicationContext.getBean(IndexDao.class).hashCode());
+		System.out.println(annotationConfigApplicationContext.getBean(IndexDao.class).hashCode());
 		IndexDao indexDao =(IndexDao)annotationConfigApplicationContext.getBean("indexDao");
 		indexDao.test();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	}

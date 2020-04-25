@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @Param
  * @return
  **/
-@Component
+//@Component
 public class TestBeanPostProcessor  implements BeanPostProcessor,PriorityOrdered{
 	/**
 	 * 在bean初始化之前执行

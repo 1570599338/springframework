@@ -39,16 +39,23 @@ public class Test {
 //	}
 
 	public static void main(String[] args) {
-		Person person1 = new Person("TUCJVXCB");
-		Person person2 = new Person("TUCJVXCB");
-
-
-		Map<Person, Integer> hashMap = new HashMap<>();
-		hashMap.put(person1, 1);
-
-		//hashMap.put(null);
-		System.out.println(person1.equals(person2));
-		System.out.println(hashMap.containsKey(person2));
+		Map<String, Object> hash = new HashMap<>();
+		//hash = (Map)System.getProperties();
+		hash=  (Map) System.getenv();
+		hash.forEach((v,k)->{
+			System.out.printf("v:"+v+"   **********   "+"k:"+k);
+		});
+		//System.out.println("*********"+hash);
+//		Person person1 = new Person("TUCJVXCB");
+//		Person person2 = new Person("TUCJVXCB");
+//
+//
+//		Map<Person, Integer> hashMap = new HashMap<>();
+//		hashMap.put(person1, 1);
+//
+//		//hashMap.put(null);
+//		System.out.println(person1.equals(person2));
+//		System.out.println(hashMap.containsKey(person2));
 	}
 
 	static class Person {
