@@ -2,6 +2,7 @@ package com.lquan.resource.config;/**
  * Created by 01370602 on 2020/4/23.
  */
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,5 +17,6 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 @ComponentScan("com.lquan.resource")
+@MapperScan("")
 public class Configration {
 }

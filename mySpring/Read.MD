@@ -39,4 +39,24 @@ Spring中的bean--->BeanDefinition
 
 
 
+
+##### @Import()注解
+这个注解主要可以导入三种类型
+一种普通的类 例如@Import(IndexDao.class)
+第二种是，处理 ImportSelector类
+第三种是，处理 ImportBeanDefinitionRegistrar 类
+
+
+### Spring中添加bean有几种方式
+1、register() 需要的一个类  没有办法参与 bd
+2、scan() 需要的一个类  没有办法参与 bd
+3、@Import() 中实现ImportBeanDefinitionRegistrar接口的类  可以参与 bd
+
+
+@MapperScan()注解主要扫描mapper
+他可以将接口转换成对象
+
+
+
+
  
