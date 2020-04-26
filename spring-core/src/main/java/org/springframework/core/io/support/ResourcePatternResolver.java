@@ -59,6 +59,10 @@ public interface ResourcePatternResolver extends ResourceLoader {
 	 * retrieves all matching resources for a given name (e.g. "/beans.xml"),
 	 * for example in the root of all deployed JAR files.
 	 * @see org.springframework.core.io.ResourceLoader#CLASSPATH_URL_PREFIX
+	 *
+	 * 主要是匹配所有在class类路径下对应的 xml文件，
+	 * 这个是伪装成前缀  "classpath*:"
+	 *
 	 */
 	String CLASSPATH_ALL_URL_PREFIX = "classpath*:";
 
@@ -70,6 +74,7 @@ public interface ResourcePatternResolver extends ResourceLoader {
 	 * @param locationPattern the location pattern to resolve
 	 * @return the corresponding Resource objects
 	 * @throws IOException in case of I/O errors
+	 *
 	 */
 	Resource[] getResources(String locationPattern) throws IOException;
 

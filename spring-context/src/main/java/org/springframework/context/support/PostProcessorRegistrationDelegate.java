@@ -56,9 +56,17 @@ final class PostProcessorRegistrationDelegate {
 
 		if (beanFactory instanceof BeanDefinitionRegistry) {
 			BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
+
+			// 放程序员手动添加的BeanFactoryPostProcessor的list
 			List<BeanFactoryPostProcessor> regularPostProcessors = new ArrayList<>();
+			// 放程序员手动添加的BeanDefinitionRegistryPostProcessor的list
 			List<BeanDefinitionRegistryPostProcessor> registryProcessors = new ArrayList<>();
 
+			/**
+			 * 因为BeanDefinitionRegistryPostProcessor接口是BeanFactoryPostProcessor的自接口
+			 * 下面的功能是想区分对应的beanFactoryPostProcessor的实现类是实现了beanFactoryPostProcessor
+			 * 还是实现了BeanDefinitionRegistryPostProcessor，然后将其进行区分
+			 */
 			for (BeanFactoryPostProcessor postProcessor : beanFactoryPostProcessors) {
 				if (postProcessor instanceof BeanDefinitionRegistryPostProcessor) {
 					BeanDefinitionRegistryPostProcessor registryProcessor =
@@ -76,6 +84,7 @@ final class PostProcessorRegistrationDelegate {
 			// Separate between BeanDefinitionRegistryPostProcessors that implement
 			// PriorityOrdered, Ordered, and the rest.
 			// currentRegistryProcessors 放的是spring内部自己实现了 BeanDefinitionRegistryPostProcessor 接口
+			// 主要还是放spring内部实现的BeanDefinitionRegistryPostProcessor的list
 			List<BeanDefinitionRegistryPostProcessor> currentRegistryProcessors = new ArrayList<>();
 
 			// First, invoke the BeanDefinitionRegistryPostProcessors that implement PriorityOrdered.
@@ -92,8 +101,8 @@ final class PostProcessorRegistrationDelegate {
 			 * 而浙西额功能都是需要在spring工程初始化完成之前执行
 			 * 要么在工程最开始的时候，要么在工程初始化之中，反正不能在之后
 			 * 因为如果在之后就没有意义，因为那个时候已经需要使用工厂了
-			 * 所以这里spring在一开始就注册了一个beanFactoryPostProcessor，用来插手springFactory的市里化过程
-			 * 在这个地方断电可以知道这个类叫做ConfigurationClassPostProcessor
+			 * 所以这里spring在一开始就注册了一个beanFactoryPostProcessor，用来插手springFactory的实例化过程
+			 * 在这个地方断点可以知道这个类叫做ConfigurationClassPostProcessor
 			 */
 			for (String ppName : postProcessorNames) {
 				if (beanFactory.isTypeMatch(ppName, PriorityOrdered.class)) {
@@ -286,6 +295,7 @@ final class PostProcessorRegistrationDelegate {
 	private static void invokeBeanDefinitionRegistryPostProcessors(
 			Collection<? extends BeanDefinitionRegistryPostProcessor> postProcessors, BeanDefinitionRegistry registry) {
 
+		// 因为只有一条数据
 		for (BeanDefinitionRegistryPostProcessor postProcessor : postProcessors) {
 			postProcessor.postProcessBeanDefinitionRegistry(registry);
 		}

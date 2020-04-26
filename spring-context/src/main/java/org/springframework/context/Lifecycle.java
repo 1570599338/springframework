@@ -55,6 +55,10 @@ public interface Lifecycle {
 	 * <p>In the case of a container, this will propagate the start signal to all
 	 * components that apply.
 	 * @see SmartLifecycle#isAutoStartup()
+	 *
+	 * 启动当前组件
+	 * <p>如果组件已经在运行，不应该抛出异常
+	 * <p>在容器的情况下，这会将 开始信号 传播到应用的所有组件中去。
 	 */
 	void start();
 
@@ -72,6 +76,13 @@ public interface Lifecycle {
 	 * that apply.
 	 * @see SmartLifecycle#stop(Runnable)
 	 * @see org.springframework.beans.factory.DisposableBean#destroy()
+	 *
+	 * (1)通常以同步方式停止该组件，当该方法执行完成后,该组件会被完全停止。当需要异步停止行为时，考虑实现SmartLifecycle 和它的 stop(Runnable) 方法变体。
+
+	 *  注意，此停止通知在销毁前不能保证到达:在*常规关闭时，{@code Lifecycle} bean将首先收到一个停止通知，然后才传播*常规销毁回调;
+	 *  然而，在*上下文的生命周期内的热刷新或中止的刷新尝试上，只调用销毁方法对于容器，这将把停止信号传播到应用的所有组件*
+	 *
+	 *
 	 */
 	void stop();
 
@@ -80,6 +91,9 @@ public interface Lifecycle {
 	 * <p>In the case of a container, this will return {@code true} only if <i>all</i>
 	 * components that apply are currently running.
 	 * @return whether the component is currently running
+	 *  检查此组件是否正在运行。
+	 *  1. 只有该方法返回false时，start方法才会被执行。
+	 *  2. 只有该方法返回true时，stop(Runnable callback)或stop()方法才会被执行。
 	 */
 	boolean isRunning();
 

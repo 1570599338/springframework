@@ -18,7 +18,11 @@ package org.springframework.beans.factory;
 
 import org.springframework.lang.Nullable;
 
+
 /**
+ *
+ * 提供父容器的访问功能.至于父容器的设置,需要找ConfigurableBeanFactory的setParentBeanFactory(接口把设置跟获取给拆开了!).
+ *
  * Sub-interface implemented by bean factories that can be part
  * of a hierarchy.
  *
@@ -35,6 +39,9 @@ public interface HierarchicalBeanFactory extends BeanFactory {
 
 	/**
 	 * Return the parent bean factory, or {@code null} if there is none.
+	 *
+	 * 返回本Bean工厂的父工厂
+	 *
 	 */
 	@Nullable
 	BeanFactory getParentBeanFactory();
@@ -47,6 +54,9 @@ public interface HierarchicalBeanFactory extends BeanFactory {
 	 * @param name the name of the bean to query
 	 * @return whether a bean with the given name is defined in the local factory
 	 * @see BeanFactory#containsBean
+	 *
+	 * 本地工厂(容器)是否包含这个Bean
+	 *
 	 */
 	boolean containsLocalBean(String name);
 

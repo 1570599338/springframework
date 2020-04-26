@@ -19,6 +19,8 @@ package org.springframework.beans.factory.config;
 import org.springframework.lang.Nullable;
 
 /**
+ * 单例bean的注册中心
+ *
  * Interface that defines a registry for shared bean instances.
  * Can be implemented by {@link org.springframework.beans.factory.BeanFactory}
  * implementations in order to expose their singleton management facility
@@ -54,6 +56,9 @@ public interface SingletonBeanRegistry {
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet
 	 * @see org.springframework.beans.factory.DisposableBean#destroy
 	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry#registerBeanDefinition
+	 *
+	 *  在给定的bean名称下，在bean注册表中将给定的现有对象注册为singleton
+	 *
 	 */
 	void registerSingleton(String beanName, Object singletonObject);
 
@@ -69,6 +74,8 @@ public interface SingletonBeanRegistry {
 	 * @param beanName the name of the bean to look for
 	 * @return the registered singleton object, or {@code null} if none found
 	 * @see ConfigurableListableBeanFactory#getBeanDefinition
+	 *
+	 * 返回在给定名称下的注册的（原始）单例对象
 	 */
 	@Nullable
 	Object getSingleton(String beanName);
@@ -94,6 +101,9 @@ public interface SingletonBeanRegistry {
 	 * @see #registerSingleton
 	 * @see org.springframework.beans.factory.ListableBeanFactory#containsBeanDefinition
 	 * @see org.springframework.beans.factory.BeanFactory#containsBean
+	 *
+	 * 检查此注册表是否包含给定的的单利实例
+	 *
 	 */
 	boolean containsSingleton(String beanName);
 
@@ -122,6 +132,9 @@ public interface SingletonBeanRegistry {
 	 * @see #registerSingleton
 	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry#getBeanDefinitionCount
 	 * @see org.springframework.beans.factory.ListableBeanFactory#getBeanDefinitionCount
+	 *
+	 * 返回注册表中
+	 *
 	 */
 	int getSingletonCount();
 

@@ -20,6 +20,11 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ResourceUtils;
 
 /**
+ *
+ * Spring中整合了获取资源的工具，就是使用Resource接口。此接口是Spring为了统一读取诸如本地文件、
+ * classpath项目路径下的文件、url互联网上的文件等不同类型渠道的资源，封装隐藏如打开流、关闭流、
+ * 报错处理等大量重复模板代码，而专程设计提供的接口类。
+ *
  * Strategy interface for loading resources (e.. class path or file system
  * resources). An {@link org.springframework.context.ApplicationContext}
  * is required to provide this functionality, plus extended
@@ -41,7 +46,11 @@ import org.springframework.util.ResourceUtils;
  */
 public interface ResourceLoader {
 
-	/** Pseudo URL prefix for loading from the class path: "classpath:" */
+	/** Pseudo URL prefix for loading from the class path: "classpath:"
+	 *
+	 * 用于从类路径加载的伪URL前缀：“classpath:” 这个不能和 "classpath*：" 不同
+	 *
+	 * */
 	String CLASSPATH_URL_PREFIX = ResourceUtils.CLASSPATH_URL_PREFIX;
 
 

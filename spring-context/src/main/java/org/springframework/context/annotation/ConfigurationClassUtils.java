@@ -119,18 +119,15 @@ abstract class ConfigurationClassUtils {
 			}
 		}
 
-		// 判断是不是加了@Configuration注解
+		// 判断是不是加了@Configuration注解，如果加了@Configuration下面的判断 @Component、@ComponentScan、
+		// @Import、@ImportResource和是否包含@Bean注解的方法就不会在判断了
 		if (isFullConfigurationCandidate(metadata)) {
-			// 如果村子啊Configuration 注解，则为BeanDefinition设置ConfigurationClass属性为full
+			// 如果存在Configuration 注解，则为BeanDefinition设置ConfigurationClass属性为full
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_FULL);
 		}
 
 		/**
-		 *  判断是否加了一下注解，摘录isListConfigurationCandidate源码
-		 *
-		 *
-		 *
-		 *
+		 * 此处判断是否是 @Component、@ComponentScan、@Import、@ImportResource和是否包含@Bean注解的方法
 		 */
 		else if (isLiteConfigurationCandidate(metadata)) {
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_LITE);
@@ -171,6 +168,9 @@ abstract class ConfigurationClassUtils {
 	}
 
 	/**
+	 *
+	 * 这个方法只是判断  @Component、@ComponentScan、@Import、@ImportResource注解和包含@Bean注解的方法
+	 *
 	 * Check the given metadata for a lite configuration class candidate
 	 * (e.g. a class annotated with {@code @Component} or just having
 	 * {@code @Import} declarations or {@code @Bean methods}).
@@ -185,6 +185,9 @@ abstract class ConfigurationClassUtils {
 		}
 
 		// Any of the typical annotations found?
+		/**
+		 * 此处判断是否是 @Component、@ComponentScan、@Import、@ImportResource
+		 */
 		for (String indicator : candidateIndicators) {
 			if (metadata.isAnnotated(indicator)) {
 				return true;
@@ -192,6 +195,9 @@ abstract class ConfigurationClassUtils {
 		}
 
 		// Finally, let's look for @Bean methods...
+		/**
+		 * 最后判断是否包含 @Bean注解
+		 */
 		try {
 			return metadata.hasAnnotatedMethods(Bean.class.getName());
 		}

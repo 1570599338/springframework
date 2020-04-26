@@ -537,7 +537,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
-				//设置执行自定义的ProcessBeanFactory
+				// 在spring的环境中去执行已经被注册的 factory processors
+				//设置执行自定义的ProcessBeanFactory 和 spring内部自定义的
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
@@ -663,6 +664,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 		// bean表达式解析器，
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
+		// 对象与String类型的转换 <property ref="dao">
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
 		// Configure the bean factory with context callbacks.
@@ -705,6 +707,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Register default environment beans.
+		/**
+		 * 如果自定义的bean中没有 systemProperties 和 environment 的bean
+		 * 则注册两个bean，key 为systemProperties 和 environment，Value为Map，
+		 * 这两个Bean就是一些系统配置和系统环境信息
+		 */
 		if (!beanFactory.containsLocalBean(ENVIRONMENT_BEAN_NAME)) {
 			beanFactory.registerSingleton(ENVIRONMENT_BEAN_NAME, getEnvironment());
 		}
@@ -732,7 +739,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * <p>Must be called before singleton instantiation.
 	 */
 	protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
-		// 这个地方需要注意getBeanFactoryPostProcessors()是获取自定义的
+		// 这个地方需要注意getBeanFactoryPostProcessors()是获取手动给Spring的BeanFactoryPostProcessor
+		// 自定义并不仅仅是程序员写的
+		// 自己写的饿可以加@Companent也可以不加
+		// 如果加了这些地方不变的不得不加
+		// 如果加了getBeanFactoryPostProcessor()这个地方得不到,那是因为是spring自己扫描的
+		// 为什么得不不到getBeanFactoryPostProcessor()这个方法是直接获取一个list
+		// 这个list是在AnnotionConfigApplicationContext被定义
+		// 所谓的自定义的手动调用AnnotationConfigApplicationContext.addBeanFactoryPostProcessor( new XXXBeanFactoryPostProcessor())
 		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory, getBeanFactoryPostProcessors());
 
 		// Detect a LoadTimeWeaver and prepare for weaving, if found in the meantime

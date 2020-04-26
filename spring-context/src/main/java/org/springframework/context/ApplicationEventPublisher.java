@@ -27,6 +27,9 @@ package org.springframework.context;
  * @see ApplicationEventPublisherAware
  * @see org.springframework.context.ApplicationEvent
  * @see org.springframework.context.event.EventPublicationInterceptor
+ *
+ * 功能就是发布事件，也就是把某个事件告诉的所有与这个事件相关的监听器。
+ *
  */
 @FunctionalInterface
 public interface ApplicationEventPublisher {
