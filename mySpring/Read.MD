@@ -58,5 +58,21 @@ Spring中的bean--->BeanDefinition
 
 
 
+### @Configuration的作用是什么？凭什么写它
+
+因为Spring会在加了@@Configuration的类中在实例化的时候，属性会加一个full
+@Component、@ComponentScan、@Import、@ImportResource属性的会加lite
+
+
+
+
+
+
+###@Improt的注解的使用方式
+
+
+
+
+
 
  
