@@ -1,8 +1,8 @@
-package com.lquan.atImprot.test;/**
+package com.lquan.atImprot1.test;/**
  * Created by 01370602 on 2020/4/27.
  */
 
-import com.lquan.atImprot.config.AppConfig;
+import com.lquan.atImprot1.config.AppConfig;
 import com.lquan.atImprot1.dao.IndexDao3;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

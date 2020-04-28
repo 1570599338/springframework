@@ -28,7 +28,7 @@ Spring中的bean--->BeanDefinition
 
 #### 2、spring的bean扩展有哪些？
 答：一共5种
-1、BeanPostProcessor：在每个bena初始化成前后做操作。
+1、BeanPostProcessor：在每个bena初始化成前后做操作。--(com.lquan.resource)
     BeanPostProcessor接口扩展PriorityOrdered这个接口可以实现队形实现类在ioc容器中的执行顺序。
 
 2、BeanFactoryPostProcessor: Spring允许在Bean创建之前，读取Bean的元属性，并根据自己的需求对元属性进行改变，比如将Bean的scope从singleton改变为prototype。
@@ -68,7 +68,14 @@ Spring中的bean--->BeanDefinition
 
 
 
-###@Improt的注解的使用方式
+###@Improt的注解的使用方式  com.lquan.atImprot
+1、使用普通类
+2、使用实现了ImportSelector接口的类
+    作用：可以动态的开闭默写功能
+3、使用实现了ImportBeanDefinitionRegistrar接口的类
+    
+
+
 
 
 

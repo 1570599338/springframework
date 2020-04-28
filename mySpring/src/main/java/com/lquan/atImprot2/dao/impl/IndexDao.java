@@ -1,6 +1,9 @@
-package com.lquan.atImprot.dao;/**
+package com.lquan.atImprot2.dao.impl;/**
  * Created by 01370602 on 2020/4/27.
  */
+
+import com.lquan.atImprot2.dao.Dao;
+import org.springframework.stereotype.Component;
 
 /**
  * ClassName IndexDao
@@ -11,8 +14,10 @@ package com.lquan.atImprot.dao;/**
  * @Param
  * @return
  **/
-public class IndexDao {
+@Component
+public class IndexDao implements Dao{
 
+	@Override
 	public void say(){
 		System.out.println("Hello IndexDao");
 	}

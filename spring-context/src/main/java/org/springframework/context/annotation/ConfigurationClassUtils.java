@@ -32,6 +32,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.core.type.MethodMetadata;
 import org.springframework.core.type.StandardAnnotationMetadata;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
@@ -84,6 +85,8 @@ abstract class ConfigurationClassUtils {
 			return false;
 		}
 
+
+
 		AnnotationMetadata metadata;
 		if (beanDef instanceof AnnotatedBeanDefinition &&
 				className.equals(((AnnotatedBeanDefinition) beanDef).getMetadata().getClassName())) {
@@ -119,8 +122,19 @@ abstract class ConfigurationClassUtils {
 			}
 		}
 
-		// 判断是不是加了@Configuration注解，如果加了@Configuration下面的判断 @Component、@ComponentScan、
-		// @Import、@ImportResource和是否包含@Bean注解的方法就不会在判断了
+
+		/**
+		 *
+		 *  判断是不是加了@Configuration注解，如果加了@Configuration下面的判断 @Component、@ComponentScan、
+		 * 	@Import、@ImportResource和是否包含@Bean注解的方法就不会在判断了
+		 *
+		 *	如果存在则spring认为他是一个全注解的类
+		 * 	lite @Bean mode ：当@Bean方法在没有使用@Configuration注解的类中声明时称之为lite @Bean mode
+		 *
+		 *	Full @Configuration：如果@Bean方法在使用@Configuration注解的类中声明时称之为Full @Configuration
+		 *
+		 *  总结一句话，Full @Configuration中的@Bean方法会被CGLIB所代理，而 lite @Bean mode中的@Bean方法不会被CGLIB代理。
+		 */
 		if (isFullConfigurationCandidate(metadata)) {
 			// 如果存在Configuration 注解，则为BeanDefinition设置ConfigurationClass属性为full
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_FULL);
@@ -128,6 +142,10 @@ abstract class ConfigurationClassUtils {
 
 		/**
 		 * 此处判断是否是 @Component、@ComponentScan、@Import、@ImportResource和是否包含@Bean注解的方法
+		 *
+		 * 如果不存在Configuration注解，Spring则认为是一个bean部分注解类
+		 *
+		 *
 		 */
 		else if (isLiteConfigurationCandidate(metadata)) {
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_LITE);

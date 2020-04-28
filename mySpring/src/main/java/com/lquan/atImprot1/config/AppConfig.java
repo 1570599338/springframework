@@ -1,7 +1,8 @@
-package com.lquan.atImprot.config;/**
+package com.lquan.atImprot1.config;/**
  * Created by 01370602 on 2020/4/27.
  */
 
+import com.lquan.atImprot1.anno.EnableLQuan;
 import com.lquan.atImprot1.improts.MyImportSelector;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
@@ -16,7 +17,7 @@ import org.springframework.context.annotation.Import;
  * @return
  **/
 
-@ComponentScan("com.lquan.atImprot")
-@Import(MyImportSelector.class)
+@ComponentScan("com.lquan.atImprot1")
+ @EnableLQuan(falg = true)
 public class AppConfig {
 }

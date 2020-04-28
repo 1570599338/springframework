@@ -1,10 +1,12 @@
-package com.lquan.atImprot.improts;/**
+package com.lquan.atImprot2.improts;/**
  * Created by 01370602 on 2020/4/27.
  */
 
-import com.lquan.atImprot.dao.IndexDao3;
+import com.lquan.atImprot2.dao.IndexDao3;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
+
+import java.util.Map;
 
 /**
  * ClassName MyImportSelector
@@ -25,6 +27,14 @@ public class MyImportSelector implements ImportSelector {
 	 */
 	@Override
 	public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+
+		Map map = importingClassMetadata.getAnnotationAttributes("com.lquan.atImprot1.anno.EnableLQuan");
+		System.out.println(map);
+		importingClassMetadata.getAnnotationTypes().forEach(e->{
+			System.out.println("********"+e);
+		});
+
+
 		String name  = IndexDao3.class.getName();
 		System.out.println(name);
 

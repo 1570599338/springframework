@@ -39,6 +39,8 @@ public class Test {
 //	}
 
 	public static void main(String[] args) {
+
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		Map<String, Object> hash = new HashMap<>();
 		//hash = (Map)System.getProperties();
 		hash=  (Map) System.getenv();

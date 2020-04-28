@@ -271,6 +271,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 	protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
 		Assert.notEmpty(basePackages, "At least one base package must be specified");
 		Set<BeanDefinitionHolder> beanDefinitions = new LinkedHashSet<>();
+		// 因为一次可以写多个包例如：scan("com.lquan.service","com.test.service")
 		for (String basePackage : basePackages) {
 			/**
 			 * 扫描basePakage路径下的Java文件

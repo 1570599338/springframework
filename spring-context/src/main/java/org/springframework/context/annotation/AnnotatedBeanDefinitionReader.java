@@ -224,9 +224,9 @@ public class AnnotatedBeanDefinitionReader {
 		 * 根据指定的bean创建一个AnnotatedGenericBeanDefinition
 		 *
 		 * 这个AnnotatedGenericBeanDefinition可以理解为是一个数据结构
-		 *
 		 * AnnotatedGenericBeanDefinition包含了类的其他信息，比如一个元信息 scop，lazy等等
 		 *
+		 *  直接通过new AnnotatedGenericBeanDefinition（）来获取对应类的相关的注解，很方便，以后可以作为一个工具类来使用了。
 		 */
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(annotatedClass);
 

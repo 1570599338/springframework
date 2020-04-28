@@ -264,15 +264,25 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		// spring的bean
 		List<BeanDefinitionHolder> configCandidates = new ArrayList<>();
 
+		/**
+		 * candidate :候选人
+		 * 英 [ˈkændɪdət]   美 [ˈkændɪdət]
+		 *	n.
+		 *	(竞选或求职的)候选人，申请人;投考者;应试者;参加考试的人;被认定适合者;被认定有某种结局者
+		 *
+		 */
 		// 获取容器中定义的所有bean的名字
 		String[] candidateNames = registry.getBeanDefinitionNames();
 
+		/**
+		 * Full和Lite的区别
+		 */
 		for (String beanName : candidateNames) {
 			BeanDefinition beanDef = registry.getBeanDefinition(beanName);
 			if (ConfigurationClassUtils.isFullConfigurationClass(beanDef) ||
 					ConfigurationClassUtils.isLiteConfigurationClass(beanDef)) {
 				/**
-				 * 在 beanDefinintion中的configyrationClass属性为full或者lite，则以为着已经处理了，直接跳过
+				 * 在 beanDefinintion中的configurationClass属性为full或者lite，则以为着已经处理了，直接跳过
 				 * 这里需要结合下面的代码理解
 				 */
 				if (logger.isDebugEnabled()) {

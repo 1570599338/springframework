@@ -58,8 +58,10 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 	@Nullable
 	private ClassLoader beanClassLoader;
 
+	// 会有环境变量
 	private Environment environment;
 
+	// 默认的名字生成器（类名首字母小写）
 	private BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
 
 
@@ -79,6 +81,9 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 	 * in the form of a BeanDefinitionRegistry
 	 * @see #setResourceLoader
 	 * @see #setEnvironment
+	 *
+	 * // 此构造函数，会完成一些参数的初始化
+	 *
 	 */
 	protected AbstractBeanDefinitionReader(BeanDefinitionRegistry registry) {
 		Assert.notNull(registry, "BeanDefinitionRegistry must not be null");
@@ -93,6 +98,7 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 		}
 
 		// Inherit Environment if possible
+		// 如果注册器里有环境变量，就用它的 否则new一个标准的~~~~  它下面也提供了set方法可以设置
 		if (this.registry instanceof EnvironmentCapable) {
 			this.environment = ((EnvironmentCapable) this.registry).getEnvironment();
 		}

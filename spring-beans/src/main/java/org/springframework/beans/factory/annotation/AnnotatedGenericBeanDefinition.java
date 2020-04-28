@@ -39,6 +39,11 @@ import org.springframework.util.Assert;
  * @since 2.5
  * @see AnnotatedBeanDefinition#getMetadata()
  * @see org.springframework.core.type.StandardAnnotationMetadata
+ *
+ *  * 这个实现类就是比GenericBeanDefinition多了个注解的属性
+ *
+ * 这个类主要存储Component、@Service、@Controller等注解注释的类
+ *
  */
 @SuppressWarnings("serial")
 public class AnnotatedGenericBeanDefinition extends GenericBeanDefinition implements AnnotatedBeanDefinition {
@@ -52,6 +57,7 @@ public class AnnotatedGenericBeanDefinition extends GenericBeanDefinition implem
 	/**
 	 * Create a new AnnotatedGenericBeanDefinition for the given bean class.
 	 * @param beanClass the loaded bean class
+	 * 注意官方这个注释：已经加载进来了的Bean的Class
 	 */
 	public AnnotatedGenericBeanDefinition(Class<?> beanClass) {
 		setBeanClass(beanClass);
@@ -67,6 +73,9 @@ public class AnnotatedGenericBeanDefinition extends GenericBeanDefinition implem
 	 * bean was discovered specifically via component-scanning as opposed to other means.
 	 * @param metadata the annotation metadata for the bean class in question
 	 * @since 3.1.1
+	 *
+	 * @since 3.1.1 此处传入AnnotationMetadata ，也得保证对应的class已经被loaded
+	 *
 	 */
 	public AnnotatedGenericBeanDefinition(AnnotationMetadata metadata) {
 		Assert.notNull(metadata, "AnnotationMetadata must not be null");
@@ -85,6 +94,9 @@ public class AnnotatedGenericBeanDefinition extends GenericBeanDefinition implem
 	 * @param metadata the annotation metadata for the bean class in question
 	 * @param factoryMethodMetadata metadata for the selected factory method
 	 * @since 4.1.1
+	 *
+	 * @since 4.1.1   可以由指定的工厂方法产生这个Bean
+	 *
 	 */
 	public AnnotatedGenericBeanDefinition(AnnotationMetadata metadata, MethodMetadata factoryMethodMetadata) {
 		this(metadata);

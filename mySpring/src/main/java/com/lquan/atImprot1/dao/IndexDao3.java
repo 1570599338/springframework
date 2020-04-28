@@ -1,4 +1,4 @@
-package com.lquan.atImprot.dao;/**
+package com.lquan.atImprot1.dao;/**
  * Created by 01370602 on 2020/4/27.
  */
 
@@ -11,9 +11,10 @@ package com.lquan.atImprot.dao;/**
  * @Param
  * @return
  **/
-public class IndexDao {
+public class IndexDao3 {
 
 	public void say(){
-		System.out.println("Hello IndexDao");
+		System.out.println("Hello IndexDao3");
 	}
+
 }
