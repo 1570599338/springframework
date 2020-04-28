@@ -22,6 +22,9 @@ public class Test {
         AnnotationConfigApplicationContext annotationConfigApplicationContext
                 = new AnnotationConfigApplicationContext(Configration.class);
 
+
+		Configration configration =  annotationConfigApplicationContext.getBean(Configration.class);
+
 		//annotationConfigApplicationContext.register(Configration.class);
 		//annotationConfigApplicationContext.scan("com.lquan.scan");
 		//annotationConfigApplicationContext.refresh();

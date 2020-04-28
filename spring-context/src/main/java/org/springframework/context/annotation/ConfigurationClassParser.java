@@ -281,6 +281,13 @@ class ConfigurationClassParser {
 			}
 		}
 
+
+		/**
+		 *
+		 * 扫描@ComponentScan包下的普通类---Start
+		 * 并放入map中
+		 *
+		 */
 		// Process any @ComponentScan annotations
 		// 处理 @ComponentScan 注解
 		Set<AnnotationAttributes> componentScans = AnnotationConfigUtils.attributesForRepeatable(
@@ -307,14 +314,46 @@ class ConfigurationClassParser {
 			}
 		}
 
+		/**
+		 *
+		 * 上面扫描@ComponentScan包下的普通类---END
+		 *
+		 */
+
+
+		/**
+		 * 处理  @Import注解
+		 */
 		// Process any @Import annotations
-		// 处理 @Import
+		/**
+		 * 处理 @Import 有3种情况
+		 * 	1、普通类 2、ImportASelector  3、ImportBeanDefinitionRegistrar
+		 * 	这里和内部递归调用时候的情况不同
+		 *
+		 *
+		 * 	这里处理的improt是需要判断我们的类当中有@Import
+		 * 	如果有就把@Import当中的值拿出来，例如@Import（XXXX。class）,
+		 * 	那么这里便把XXXX穿进去进行解析，在解析的过程中如果发觉是一个importSelector那么就会回调selector的方法
+		 * 	返回一个字符串（类名），通过这个字符串得到一个类
+		 * 	继而在递归调用本方法来处理这个类
+		 *
+		 * 	为什么要单独写出这么多注释来说明这个方法？因为selector返回的那个类，严格意义上来讲不符合@Import（XXX。class），
+		 * 	因为这个类没有被直接import。如果不符合，就不会调用这个方法 getImport（SourceClass）既得到所有的import的类
+		 * 	但是注意的是递归当中是没有 getImports（SourceClass）的，意思是直接把selector当中的返回的类直接当成一个import的类去解析
+		 *
+		 * 	总之就是一句话，@Import(XXX.class) ，那么XXX这个类会被解析
+		 * 	如果XXX是Selector的那么他当中返回的类型虽然没有直接加上@Import，但是也会直接解析。
+		 *
+		 *
+		 */
 		processImports(configClass, sourceClass, getImports(sourceClass), true);
 
 		// Process any @ImportResource annotations
-		// 处理 @ImportResource
-		AnnotationAttributes importResource =
-				AnnotationConfigUtils.attributesFor(sourceClass.getMetadata(), ImportResource.class);
+		/**
+		 * 处理 @ImportResource
+		 */
+		AnnotationAttributes importResource = AnnotationConfigUtils.attributesFor(sourceClass.getMetadata(), ImportResource.class);
+
 		if (importResource != null) {
 			String[] resources = importResource.getStringArray("locations");
 			Class<? extends BeanDefinitionReader> readerClass = importResource.getClass("reader");

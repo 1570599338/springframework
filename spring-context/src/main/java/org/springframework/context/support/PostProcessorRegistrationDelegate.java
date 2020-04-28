@@ -155,7 +155,11 @@ final class PostProcessorRegistrationDelegate {
 			// 执行BeanFactoryPostProcessor的回调
 			// 前面执行的BeanFactoryPostProcessor的子类BeanDefinitionRegistryPostProcessor的回调
 			// 这是执行的是BeanFactoryPostProcessor
+
+			// ConfigurationClassPostProcessor是BeanFactoryPostProcessor子接口类，也是再次执行的
 			invokeBeanFactoryPostProcessors(registryProcessors, beanFactory);
+
+			// 下面是系统及自定义实现了BeanFactoryPostProcessor接口实现类的回调
 			invokeBeanFactoryPostProcessors(regularPostProcessors, beanFactory);
 		}
 

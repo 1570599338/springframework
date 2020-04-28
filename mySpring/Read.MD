@@ -75,7 +75,11 @@ Spring中的bean--->BeanDefinition
 3、使用实现了ImportBeanDefinitionRegistrar接口的类
     
 
+###full和lite的区别
 
+full表示他是一个全配置类，spring在为这个配置类生成bean的时候他会加上cglib代理
+
+lite表示他是一个部分配置类，spring在为这个配置类生成bean的时候他会是原生的
 
 
 
