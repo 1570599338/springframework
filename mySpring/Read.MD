@@ -63,6 +63,8 @@ Spring中的bean--->BeanDefinition
 因为Spring会在加了@@Configuration的类中在实例化的时候，属性会加一个full
 @Component、@ComponentScan、@Import、@ImportResource属性的会加lite
 
+添加了@Configuration注解作用是，让对应的Congfig类能够去产生CGLIB代理，CGLIB回去实现一个类，并注入一个FactoryBean
+
 
 
 
@@ -84,6 +86,52 @@ lite表示他是一个部分配置类，spring在为这个配置类生成bean的
 
 
 
-
+### spring的后置处理器
+BeanPostProcessor：插手spring实例过程，实例化之后，在bean没有被spring的bean容器管理之前干活
+                    经典场景：1、bean的初始化@PostConstruct，初始化的类CommonAnnotationBeanPostProcessor
+                             2、aop
+                             
+                             
+BeanFactoryPostProcessor：  springbean容器当中任意的一个bean被new出来之前执行，针对beaFactory来创建， 
+                            经典场景: 1、ConfigurationClassPostProcessor#postProcessorBeanFactory针对配置类加上cglib代理
+                                    
+                                    
+BeanDefinitionRegistryPostProcessor: 是BeanFactoryPostProcessor的子类在BeanFactoryPostProcessor之前执行？因为源码当中先遍历的BeanDefinitionRegistryPostProcessor
+                                     ，并且 BeanDefinitionRegistryPostProcessor有spring系统提供的，还有自定义的，自定义的先执行
+                                     经典场景:   ConfigurationClassPostProcessor类这个类实现了spring核心类，实现扫描共功能 、3中import的扫描、@Bean的扫描、 
+                                                 判断配置类是否是一个完整的配置类。
+                                                 
+                                                 
+                                                 
+importSelect ：通过这个方法 selectImports返回一个类名（全名），把它编程bd动态添加bd(这个bd是死的)                                                                               
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
  

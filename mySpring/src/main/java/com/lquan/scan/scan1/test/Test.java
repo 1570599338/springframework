@@ -29,6 +29,7 @@ public class Test {
 		//annotationConfigApplicationContext.scan("com.lquan.scan");
 		//annotationConfigApplicationContext.refresh();
 	//	annotationConfigApplicationContext.register(IndexDao.class);
+		System.out.println(annotationConfigApplicationContext.getBean(IndexDao.class).getClass().getName());
 
 		IndexDao indexDao = annotationConfigApplicationContext.getBean(IndexDao.class);
 		indexDao.query();
