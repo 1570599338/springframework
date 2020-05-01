@@ -21,17 +21,25 @@ public class Test {
     	// 把spring所有的前提环境准备好
         AnnotationConfigApplicationContext annotationConfigApplicationContext
                 = new AnnotationConfigApplicationContext(Configration.class);
+		annotationConfigApplicationContext.getDefaultListableBeanFactory().getBeanDefinition("indexDao").setScope("prototye");
 
-
-		Configration configration =  annotationConfigApplicationContext.getBean(Configration.class);
-
-		//annotationConfigApplicationContext.register(Configration.class);
-		//annotationConfigApplicationContext.scan("com.lquan.scan");
-		//annotationConfigApplicationContext.refresh();
-	//	annotationConfigApplicationContext.register(IndexDao.class);
-		System.out.println(annotationConfigApplicationContext.getBean(IndexDao.class).getClass().getName());
 
 		IndexDao indexDao = annotationConfigApplicationContext.getBean(IndexDao.class);
-		indexDao.query();
+		//indexDao.query();
+		System.out.println(indexDao.hashCode());
+		IndexDao indexDao1 = annotationConfigApplicationContext.getBean(IndexDao.class);
+		//indexDao.query();
+		System.out.println(indexDao1.hashCode());
+
+/**
+		Configration configration =  annotationConfigApplicationContext.getBean(Configration.class);
+
+		annotationConfigApplicationContext.register(Configration.class);
+		annotationConfigApplicationContext.scan("com.lquan.scan");
+		annotationConfigApplicationContext.refresh();
+		annotationConfigApplicationContext.register(IndexDao.class);
+		System.out.println(annotationConfigApplicationContext.getBean(IndexDao.class).getClass().getName());
+**/
+
     }
 }
