@@ -1,9 +1,9 @@
-package com.lquan.mapperScan.test;/**
+package com.lquan.mybatis.test;/**
  * Created by 01370602 on 2020/4/26.
  */
 
-import com.lquan.mapperScan.config.AppConfig;
-import com.lquan.mapperScan.service.CardService;
+import com.lquan.mybatis.config.AppConfig;
+import com.lquan.mybatis.service.CardService;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -22,10 +22,7 @@ public class Test {
 
 		AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
 		annotationConfigApplicationContext.getBean(CardService.class).list();
-		SqlSessionFactoryBean  sqlSessionFactoryBean = annotationConfigApplicationContext.getBean(SqlSessionFactoryBean.class);
 
-
-		annotationConfigApplicationContext.close();
 
 	}
 }

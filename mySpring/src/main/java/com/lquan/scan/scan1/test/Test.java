@@ -21,15 +21,10 @@ public class Test {
     	// 把spring所有的前提环境准备好
         AnnotationConfigApplicationContext annotationConfigApplicationContext
                 = new AnnotationConfigApplicationContext(Configration.class);
-		annotationConfigApplicationContext.getDefaultListableBeanFactory().getBeanDefinition("indexDao").setScope("prototye");
 
 
 		IndexDao indexDao = annotationConfigApplicationContext.getBean(IndexDao.class);
-		//indexDao.query();
-		System.out.println(indexDao.hashCode());
-		IndexDao indexDao1 = annotationConfigApplicationContext.getBean(IndexDao.class);
-		//indexDao.query();
-		System.out.println(indexDao1.hashCode());
+		indexDao.query();
 
 /**
 		Configration configration =  annotationConfigApplicationContext.getBean(Configration.class);
