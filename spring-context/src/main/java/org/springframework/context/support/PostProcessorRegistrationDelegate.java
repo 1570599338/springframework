@@ -98,7 +98,7 @@ final class PostProcessorRegistrationDelegate {
 			 * 这个地方可以得到beandefinitionPostProcessor，因为是spring默认在最开始注册的
 			 * 为什么要在最开始注册这个呢？
 			 * 因为spring的工程需要解析去扫描等功能
-			 * 而浙西额功能都是需要在spring工程初始化完成之前执行
+			 * 而这些功能都是需要在spring工程初始化完成之前执行
 			 * 要么在工程最开始的时候，要么在工程初始化之中，反正不能在之后
 			 * 因为如果在之后就没有意义，因为那个时候已经需要使用工厂了
 			 * 所以这里spring在一开始就注册了一个beanFactoryPostProcessor，用来插手springFactory的实例化过程

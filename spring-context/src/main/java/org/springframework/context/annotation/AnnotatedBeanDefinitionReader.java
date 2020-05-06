@@ -231,9 +231,13 @@ public class AnnotatedBeanDefinitionReader {
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(annotatedClass);
 
 		/**
-		 * 判断这个类是否需要跳过解析
+		 *  判断注册的Class 是否包含@Conditional注解，如果有获取全部value，放入List中
+		 *  排序后，遍历所有的Conditiion的实现，使用反射获取对象，执行matches方法，
+		 * 如果发现有返回false，中断循环直接返回true，
+		 *
 		 */
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
+			//如果 @Conditional条件不满足，不进行注册
 			return;
 		}
 

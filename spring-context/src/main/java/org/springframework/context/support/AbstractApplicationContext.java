@@ -517,11 +517,18 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
-			// 准备工作包含设置启动时间，是否激活标识位，初始化属性源(property source)配置
+			// 准备工作包含设置启动时间，是否激活标识位，初始化属性源(property source)配置 // AbstractApplicationContext
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
-			// 返回一个factory 因为要对工程进行初始化
+			// 告知子类去刷新内部的 bean factory
+			/**
+			 * 这个方法制作了3 件事
+			 * 1、refreshed true
+			 * 2、DefaultListableBeanFactory 设置SerializationId的ID
+			 * 3、获取DefaultListableBeanFactory返回
+			 *
+			 */
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
@@ -548,6 +555,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
+				// 初始化特定上下文子类中的其他特殊bean。
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
@@ -560,9 +568,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
+				// 实例化所有剩余的（非延迟初始化）单例。
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
+				// 发布对应的事件
 				finishRefresh();
 			}
 
@@ -642,6 +652,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @see #getBeanFactory()
 	 */
 	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
+		/**
+		 * refreshed true
+		 * DefaultListableBeanFactory 设置SerializationId的ID
+		 * this.beanFactory.setSerializationId(getId());
+		 */
 		refreshBeanFactory();
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 		if (logger.isDebugEnabled()) {
