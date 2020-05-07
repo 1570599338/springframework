@@ -123,7 +123,7 @@ template        --》spring + mybatis
                     
                     
                     
-                    
+## aop 就是通过原生对象转成代理对象这么一个规则                  
                     
                     
                     
