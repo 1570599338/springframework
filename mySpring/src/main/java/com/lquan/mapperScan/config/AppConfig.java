@@ -1,4 +1,5 @@
-package com.lquan.mapperScan.config;/**
+package com.lquan.mapperScan.config;
+/**
  * Created by 01370602 on 2020/4/26.
  */
 

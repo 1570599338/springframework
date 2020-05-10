@@ -23,7 +23,7 @@ public class Test {
 
 		AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
 		annotationConfigApplicationContext.getBean(CardService.class).list();
-		//		CarDao cardDao = (CarDao) annotationConfigApplicationContext.getBean("carDao");
+		//		LogDao cardDao = (LogDao) annotationConfigApplicationContext.getBean("carDao");
 //		System.out.println(cardDao.list("liuquan"));
 
 		annotationConfigApplicationContext.close();
