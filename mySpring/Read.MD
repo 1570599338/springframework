@@ -128,10 +128,14 @@ template        --》spring + mybatis
                     
                     
                     
+## spring的事务传播
+传播机制类型
+1、PROPAGATION_REQUIRED
+支持当前事务，如果当前没有事务，则新建事务
+如果当前存在事务，则加入当前事务，合并成一个事务                 
                     
-                    
-                    
-                    
+2、SUPPORTS
+支持当前事务，如果当前没有事务，就以非事务方式执行。                   
                     
 
  
