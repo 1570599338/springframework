@@ -17,4 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("com.lquan.scan.scan1")
 public class Configration {
+
+
 }
