@@ -122,7 +122,7 @@ public class DefaultResourceLoader implements ResourceLoader {
 	 * allowing for introspection as well as modification.
 	 * @since 4.3
 	 *
-	 *
+	 * 获取协议解析器
 	 */
 	public Collection<ProtocolResolver> getProtocolResolvers() {
 		return this.protocolResolvers;
